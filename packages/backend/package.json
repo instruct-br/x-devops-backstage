@@ -25,6 +25,7 @@
     "@backstage/plugin-auth-backend": "^0.18.0",
     "@backstage/plugin-auth-node": "^0.2.11",
     "@backstage/plugin-catalog-backend": "^1.7.2",
+    "@backstage/plugin-kubernetes-backend": "^0.9.3",
     "@backstage/plugin-permission-common": "^0.7.3",
     "@backstage/plugin-permission-node": "^0.7.5",
     "@backstage/plugin-proxy-backend": "^0.2.36",
@@ -38,7 +39,7 @@
     "dockerode": "^3.3.1",
     "express": "^4.17.1",
     "express-promise-router": "^4.1.0",
-    "pg": "^8.3.0",
+    "pg": "^8.9.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
