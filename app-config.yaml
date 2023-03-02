@@ -28,8 +28,20 @@ backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
+    # client: better-sqlite3
+    # connection: ':memory:'
+    # config options: https://node-postgres.com/apis/client
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: postgres
+      password: 'backstage'
+      # https://node-postgres.com/features/ssl
+      #ssl: require # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
+        #ca: # if you have a CA file and want to verify it you can uncomment this section
+        #$file: <file-path>/ca/server.crt
+
   cache:
     store: memory
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
@@ -65,7 +77,12 @@ techdocs:
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+  environment: development
+  providers:
+    github:
+      development:
+        clientId: 901b1f6e0e0a58cdd136
+        clientSecret:   89ab88f449dd64250ab42fe846e6e477eb486173
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -93,6 +110,40 @@ catalog:
       rules:
         - allow: [User, Group]
 
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+
+# kubernetes:
+#   serviceLocatorMethod:
+#     type: 'multiTenant'
+#   clusterLocatorMethods:
+#     - type: 'config'
+#       clusters:
+#         - url: http://192.168.65.4:6443
+#           name: docker-desktop
+#           authProvider: 'github'
+#           skipTLSVerify: false
+#           skipMetricsLookup: true
+#           # serviceAccountToken:
+#           dashboardUrl: http://127.0.0.1:64713 # url copied from running the command: minikube service kubernetes-dashboard -n kubernetes-dashboard
+#           dashboardApp: standard
+#           caData: ${K8S_CONFIG_CA_DATA}
+#           caFile: '' # local path to CA file
+#           customResources:
+#             - group: 'argoproj.io'
+#               apiVersion: 'v1alpha1'
+#               plural: 'rollouts'
+        # - url: http://127.0.0.2:9999
+        #   name: aws-cluster-1
+        #   authProvider: 'aws'
+    # - type: 'gke'
+    #   projectId: 'gke-clusters'
+    #   region: 'europe-west1'
+    #   skipTLSVerify: true
+    #   skipMetricsLookup: true
+    #   exposeDashboard: true
+
     ## Uncomment these lines to add more example data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
@@ -102,3 +153,5 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
     #     - allow: [User, Group]
+
+
