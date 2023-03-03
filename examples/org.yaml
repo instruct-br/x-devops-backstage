@@ -1,5 +1,26 @@
+#USERS
 ---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: Debora
+spec:
+  displayName: Debora Gama
+  email: debora.gama@instruct.com.br
+  memberOf: [school-devops, Instruct]
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: Ana
+spec:
+  displayName: Ana Cândida
+  email: ana.candida@instruct.com
+  memberOf: [school-devops, Instruct]
+---
+
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
@@ -7,7 +28,6 @@ metadata:
 spec:
   memberOf: [guests]
 ---
-# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-group
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
@@ -15,4 +35,22 @@ metadata:
 spec:
   type: team
   children: []
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-group
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: school-devops
+spec:
+  type: team
+  children: []
+  # parent: [Instruct]
 
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Instruct
+spec:
+  type: group
+  children: [school-devops]
